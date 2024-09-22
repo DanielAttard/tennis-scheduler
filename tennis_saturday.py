@@ -192,14 +192,14 @@ def check_password():
         return True
 
 def add_player(name, date):
-    conn = sqlite3.connect('saturday_tennis_scheduler.db')
+    conn = sqlite3.connect('tennis_saturday.db')
     c = conn.cursor()
     c.execute("INSERT INTO players (name, date) VALUES (?, ?)", (name, date))
     conn.commit()
     conn.close()
 
 def get_players(date):
-    conn = sqlite3.connect('saturday_tennis_scheduler.db')
+    conn = sqlite3.connect('tennis_saturday.db')
     c = conn.cursor()
     c.execute("SELECT name FROM players WHERE date = ?", (date,))
     players = [row[0] for row in c.fetchall()]
@@ -207,14 +207,14 @@ def get_players(date):
     return players
 
 def clear_players(date):
-    conn = sqlite3.connect('saturday_tennis_scheduler.db')
+    conn = sqlite3.connect('tennis_saturday.db')
     c = conn.cursor()
     c.execute("DELETE FROM players WHERE date = ?", (date,))
     conn.commit()
     conn.close()
 
 def save_schedule_to_db(schedule, date):
-    conn = sqlite3.connect('saturday_tennis_scheduler.db')
+    conn = sqlite3.connect('tennis_saturday.db')
     c = conn.cursor()
     schedule_data = json.dumps(schedule)
     c.execute("REPLACE INTO schedules (date, schedule_data) VALUES (?, ?)", (date, schedule_data))
@@ -222,7 +222,7 @@ def save_schedule_to_db(schedule, date):
     conn.close()
 
 def load_schedule_from_db(date):
-    conn = sqlite3.connect('saturday_tennis_scheduler.db')
+    conn = sqlite3.connect('tennis_saturday.db')
     c = conn.cursor()
     c.execute("SELECT schedule_data FROM schedules WHERE date = ?", (date,))
     result = c.fetchone()
@@ -235,7 +235,7 @@ def load_schedule_from_db(date):
     return None
 
 def clear_schedule_in_db(date):
-    conn = sqlite3.connect('saturday_tennis_scheduler.db')
+    conn = sqlite3.connect('tennis_saturday.db')
     c = conn.cursor()
     c.execute("DELETE FROM schedules WHERE date = ?", (date,))
     conn.commit()
