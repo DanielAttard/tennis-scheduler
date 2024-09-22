@@ -1,0 +1,10 @@
+streamlit
+pandas
+numpy
+gspread
+datetime
+Pillow  # for working with images
+google-auth  # for Google credentials
+google-auth-oauthlib
+google-api-python-client  # for Google Sheets API
+reportlab>=3.6.12
