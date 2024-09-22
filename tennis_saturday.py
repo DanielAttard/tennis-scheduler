@@ -13,7 +13,7 @@ import sqlite3
 import json
 
 def init_db():
-    conn = sqlite3.connect('tennis_scheduler.db')
+    conn = sqlite3.connect('tennis_saturday.db')
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS players
                  (id INTEGER PRIMARY KEY, name TEXT, date TEXT)''')
@@ -192,14 +192,14 @@ def check_password():
         return True
 
 def add_player(name, date):
-    conn = sqlite3.connect('tennis_scheduler.db')
+    conn = sqlite3.connect('saturday_tennis_scheduler.db')
     c = conn.cursor()
     c.execute("INSERT INTO players (name, date) VALUES (?, ?)", (name, date))
     conn.commit()
     conn.close()
 
 def get_players(date):
-    conn = sqlite3.connect('tennis_scheduler.db')
+    conn = sqlite3.connect('saturday_tennis_scheduler.db')
     c = conn.cursor()
     c.execute("SELECT name FROM players WHERE date = ?", (date,))
     players = [row[0] for row in c.fetchall()]
@@ -207,14 +207,14 @@ def get_players(date):
     return players
 
 def clear_players(date):
-    conn = sqlite3.connect('tennis_scheduler.db')
+    conn = sqlite3.connect('saturday_tennis_scheduler.db')
     c = conn.cursor()
     c.execute("DELETE FROM players WHERE date = ?", (date,))
     conn.commit()
     conn.close()
 
 def save_schedule_to_db(schedule, date):
-    conn = sqlite3.connect('tennis_scheduler.db')
+    conn = sqlite3.connect('saturday_tennis_scheduler.db')
     c = conn.cursor()
     schedule_data = json.dumps(schedule)
     c.execute("REPLACE INTO schedules (date, schedule_data) VALUES (?, ?)", (date, schedule_data))
@@ -222,7 +222,7 @@ def save_schedule_to_db(schedule, date):
     conn.close()
 
 def load_schedule_from_db(date):
-    conn = sqlite3.connect('tennis_scheduler.db')
+    conn = sqlite3.connect('saturday_tennis_scheduler.db')
     c = conn.cursor()
     c.execute("SELECT schedule_data FROM schedules WHERE date = ?", (date,))
     result = c.fetchone()
@@ -235,7 +235,7 @@ def load_schedule_from_db(date):
     return None
 
 def clear_schedule_in_db(date):
-    conn = sqlite3.connect('tennis_scheduler.db')
+    conn = sqlite3.connect('saturday_tennis_scheduler.db')
     c = conn.cursor()
     c.execute("DELETE FROM schedules WHERE date = ?", (date,))
     conn.commit()
@@ -278,12 +278,12 @@ with st.sidebar:
         <div style="display: flex; justify-content: center;">
             <img src="data:image/png;base64,{}" width="200">
         </div>
-        """.format(img_to_base64("tltc-logo.png")),
+        """.format(img_to_base64("images/tltc-logo.png")),
         unsafe_allow_html=True
     )
     st.header("About TLTC")
     st.write("""The Toronto Lawn Tennis Club has spent 150 years perfecting the art of tennis excellence, but on Saturdays from 4 to 6 PM, we take over to remind everyone that perfection is overrated. Our mixed crew of weekend warriors may not have the smoothest backhands or the most graceful serves, but what we lack in finesse, we make up for in friendly trash talk and questionable form. It's less about scoring aces and more about acing the art of having a laugh—plus, where else can you call "love" and mean it sarcastically?""")
-    st.write("""Questions? Contact SaturdayTennis@gmail.com""")
+    st.write("""Contact: TLTC.Mixed.Saturday@gmail.com""")
 
 # Main content
 st.write("""
