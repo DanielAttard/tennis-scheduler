@@ -326,8 +326,12 @@ if len(players) < MAX_PLAYERS:
         st.markdown(f'<p class="big-font">Sign-up for {formatted_date}:</p>', unsafe_allow_html=True)
 
         # The text input will now use the custom styling
-        new_player = st.text_input("", key='new_player', label_visibility="collapsed")
-
+        #new_player = st.text_input("", key='new_player', label_visibility="collapsed")
+        new_player = st.text_input(
+            label=f"Sign-up for {formatted_date}",
+            key='new_player',
+            label_visibility="collapsed"
+        )
         submit = st.form_submit_button("✋  I'm in!")
 
         if submit:
