@@ -299,7 +299,7 @@ st.write("""
 if len(players) < MAX_PLAYERS:
     with st.form(key="player_signup"):
         new_player = st.text_input(f"Sign-up for {formatted_date}:", key='new_player')
-        submit = st.form_submit_button("✋  I'm in!")
+        submit = st.form_submit_button("I'm in!")
 
         if submit:
             if new_player and new_player not in players:
@@ -340,7 +340,7 @@ if len(players) >= 8:
         # Create PDF and add download button
         pdf_buffer = create_pdf(df_transposed)
         st.download_button(
-            label="⬇️  Download as PDF",
+            label="Download as PDF",
             data=pdf_buffer,
             file_name=f"tennis_schedule_{formatted_date_for_filename}.pdf",
             mime="application/pdf"
@@ -351,7 +351,7 @@ if len(players) >= 8:
     # Provide options to generate or clear the schedule, protected by password
     if check_password():
         #st.write("You are authenticated. You can now generate or clear the schedule.")
-        if st.button("🔄  Generate Schedule"):
+        if st.button("Generate Schedule"):
             schedule = generate_schedule(players_for_schedule, num_courts)
             if schedule:
                 save_schedule_to_db(schedule, formatted_date_for_filename)
@@ -362,9 +362,9 @@ if len(players) >= 8:
             else:
                 st.error("Failed to generate a valid schedule.")
         
-        if st.button("❌  Clear Schedule"):
+        if st.button("Clear Schedule"):
             clear_schedule()
-            st.success("🗑️Schedule cleared.")
+            st.success("Schedule cleared.")
             st.rerun()
 else:
-    st.write("Waiting for players to sign-up...")
+    st.write("Waiting for more players to sign up...")
