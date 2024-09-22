@@ -246,7 +246,7 @@ init_db()
 
 # Get the date of the next upcoming Saturday
 next_saturday = get_next_saturday()
-formatted_date = next_saturday.strftime("%B %d, %Y")
+formatted_date = next_saturday.strftime("%A, %B %d, %Y")
 formatted_date_for_filename = next_saturday.strftime("%Y-%m-%d")
 
 # Initialize global variables in session_state
@@ -268,8 +268,16 @@ else:
 # Define MAX_PLAYERS
 MAX_PLAYERS = 16
 
+# Add this near the top of your script, before any other Streamlit commands
+st.set_page_config(
+    page_title="Saturday Tennis",
+    page_icon="images/tltc-logo.png",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
 # Streamlit app UI
-st.title('🎾 TLTC Saturday Tennis Sign-up')
+st.title('🎾 TLTC Saturday Tennis')
 
 # Sidebar
 with st.sidebar:
@@ -290,7 +298,7 @@ st.write("""
 ### Instructions:
 - Max of 16 players (4 courts)
 - Extra players added to subs list
-- Sign-up by Thursday at midnight
+- Sign-up by Thursday night
 - Schedule will be posted on Friday
 - Games are Saturday from 4:00pm to 6:00pm      
 """)
@@ -298,7 +306,29 @@ st.write("""
 # Step 1: Enter player names one by one
 if len(players) < MAX_PLAYERS:
     with st.form(key="player_signup"):
-        new_player = st.text_input(f"Sign-up for {formatted_date}:", key='new_player')
+        #new_player = st.text_input(f"Sign-up for {formatted_date}:", key='new_player')
+        # Add this CSS to make the input more prominent
+        st.markdown("""
+        <style>
+        .big-font {
+            font-size:22px !important;
+            font-weight: bold;
+        }
+        .stTextInput > div > div > input {
+            font-size: 20px;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+        # Use the custom CSS class for the label
+        st.markdown(f'<p class="big-font">Sign-up for {formatted_date}:</p>', unsafe_allow_html=True)
+
+        # The text input will now use the custom styling
+        new_player = st.text_input("", key='new_player', label_visibility="collapsed")
+
         submit = st.form_submit_button("✋  I'm in!")
 
         if submit:
